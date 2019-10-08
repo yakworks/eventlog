@@ -1,0 +1,60 @@
+//It all starts here
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        //classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
+        classpath "org.yakworks:gradle-plugins:1.1.13"
+    }
+}
+
+apply plugin: 'yakworks.shipyak' //our opinionated defaults for gradle groovy & grails projects
+
+subprojects {
+    plugins.withId('java') {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+
+        dependencies {
+            compile "org.grails.plugins:view-tools:$vPluginViewTools"
+
+            testRuntime "com.h2database:h2"
+            testRuntime "org.apache.tomcat:tomcat-jdbc"
+
+            testCompile "org.grails:grails-gorm-testing-support"
+            testCompile "org.grails:grails-web-testing-support"
+            testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
+            testCompile "org.grails:views-json-testing-support:$versionViews"
+        }
+
+        testlogger {
+            // Defaults from https://github.com/radarsh/gradle-test-logger-plugin
+            // theme 'standard'
+            // showExceptions true
+            // slowThreshold 2000
+            // showSummary true
+            // showSimpleNames false
+            // showPassed true
+            // showSkipped true
+            // showFailed true
+            // showStandardStreams false //Show PRINTLNS
+            // showPassedStandardStreams true
+            // showSkippedStandardStreams true
+            // showFailedStandardStreams true
+        }
+    }
+    configurations {
+        testCompile.extendsFrom compileOnly //includes the compileOnly in tests too so we don't have to list twice
+        all {
+            resolutionStrategy.cacheChangingModulesFor 1, 'seconds' //when changing = true this sets the cache time
+        }
+    }
+}
+
+ext.codenarcRuleset= '''
+  //getRule('Println').enabled = false
+'''

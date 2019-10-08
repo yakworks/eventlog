@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="org.grails.plugins.grails-event-log.ast" target="1.8" />
+      <module name="org.grails.plugins.grails-event-log.integrationTest" target="1.8" />
+      <module name="org.grails.plugins.grails-event-log.main" target="1.8" />
+      <module name="org.grails.plugins.grails-event-log.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
