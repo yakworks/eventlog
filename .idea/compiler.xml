@@ -6,6 +6,9 @@
       <module name="org.grails.plugins.grails-event-log.integrationTest" target="1.8" />
       <module name="org.grails.plugins.grails-event-log.main" target="1.8" />
       <module name="org.grails.plugins.grails-event-log.test" target="1.8" />
+      <module name="yakworks.test-app.integrationTest" target="1.8" />
+      <module name="yakworks.test-app.main" target="1.8" />
+      <module name="yakworks.test-app.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -26,4 +26,12 @@ Brief summary/description of the plugin.
 
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/grails-event-log"
+
+    Closure doWithSpring() {
+        { ->
+            eventLogger(EventLogger) { bean ->
+                bean.autowire = 'byName'
+            }
+        }
+    }
 }
