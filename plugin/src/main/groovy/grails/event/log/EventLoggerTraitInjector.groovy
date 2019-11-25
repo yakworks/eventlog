@@ -26,7 +26,6 @@ class EventLoggerTraitInjector implements TraitInjector {
 
     @Override
     String[] getArtefactTypes() {
-        //TODO: When domain is included tests are failing
-        [/*DomainClassArtefactHandler.TYPE,*/ ControllerArtefactHandler.TYPE, ServiceArtefactHandler.TYPE] as String[]
+        [DomainClassArtefactHandler.TYPE, ControllerArtefactHandler.TYPE, ServiceArtefactHandler.TYPE] as String[]
     }
 }

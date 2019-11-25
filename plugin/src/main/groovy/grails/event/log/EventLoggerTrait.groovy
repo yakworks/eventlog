@@ -4,10 +4,12 @@
 */
 package grails.event.log
 
-import org.springframework.beans.factory.annotation.Autowired
+import gorm.tools.beans.AppCtx
 
 trait EventLoggerTrait {
-
-    @Autowired
-    transient EventLogger eventLogger
+    private static EventLogger cachedEventLogger
+    transient EventLogger getEventLogger(){
+        if (!cachedEventLogger) cachedEventLogger = AppCtx.get('eventLogger', EventLogger)
+        cachedEventLogger
+    }
 }

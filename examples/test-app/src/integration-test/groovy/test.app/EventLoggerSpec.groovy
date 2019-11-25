@@ -35,4 +35,10 @@ class EventLoggerSpec extends Specification {
         controller.eventLogger instanceof EventLogger
 
     }
+
+    void "Check if eventLogger is attached in domain"() {
+
+        expect:
+        (new Org()).eventLogger instanceof EventLogger
+    }
 }
