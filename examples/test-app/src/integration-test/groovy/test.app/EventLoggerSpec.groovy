@@ -1,6 +1,6 @@
 package test.app
 
-import grails.event.log.EventLogger
+import grails.eventlog.EventLogger
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,5 +40,6 @@ class EventLoggerSpec extends Specification {
 
         expect:
         (new Org()).eventLogger instanceof EventLogger
+        Org.eventLogger instanceof EventLogger
     }
 }
