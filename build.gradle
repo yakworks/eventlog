@@ -24,27 +24,10 @@ subprojects {
 
             testRuntime "com.h2database:h2"
             testRuntime "org.apache.tomcat:tomcat-jdbc"
-
             testCompile "org.grails:grails-gorm-testing-support"
             testCompile "org.grails:grails-web-testing-support"
             testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
             testCompile "org.grails:views-json-testing-support:$versionViews"
-        }
-
-        testlogger {
-            // Defaults from https://github.com/radarsh/gradle-test-logger-plugin
-            // theme 'standard'
-            // showExceptions true
-            // slowThreshold 2000
-            // showSummary true
-            // showSimpleNames false
-            // showPassed true
-            // showSkipped true
-            // showFailed true
-            // showStandardStreams false //Show PRINTLNS
-            // showPassedStandardStreams true
-            // showSkippedStandardStreams true
-            // showFailedStandardStreams true
         }
     }
     configurations {
