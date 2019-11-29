@@ -24,7 +24,6 @@ subprojects {
 
             testRuntime "com.h2database:h2"
             testRuntime "org.apache.tomcat:tomcat-jdbc"
-
             testCompile "org.grails:grails-gorm-testing-support"
             testCompile "org.grails:grails-web-testing-support"
             testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
