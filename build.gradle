@@ -20,7 +20,6 @@ subprojects {
         targetCompatibility = '1.8'
 
         dependencies {
-            compile "org.grails.plugins:view-tools:$vPluginViewTools"
 
             testRuntime "com.h2database:h2"
             testRuntime "org.apache.tomcat:tomcat-jdbc"
