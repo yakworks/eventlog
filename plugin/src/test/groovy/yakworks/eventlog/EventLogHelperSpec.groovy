@@ -9,7 +9,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
 
     final String JOB_NAME  = 'EventLogHelperTests'
     final String COMPONENT = 'service/method'
-    final String APP_NAME  = 'grails-event-log'
+    final String APP_NAME  = 'eventlog'
 
     void setupSpec() {
         defineBeans {
