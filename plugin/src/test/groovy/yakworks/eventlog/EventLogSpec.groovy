@@ -1,8 +1,6 @@
-package nine.rally.domain
+package yakworks.eventlog
 
 import gorm.tools.testing.unit.DomainRepoCrudSpec
-import grails.eventlog.EventLog
-import grails.eventlog.EventLogger
 import org.apache.log4j.Level
 
 class EventLogSpec extends DomainRepoCrudSpec<EventLog> {

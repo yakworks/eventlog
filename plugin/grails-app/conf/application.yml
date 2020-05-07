@@ -1,8 +1,8 @@
 ---
 grails:
-    profile: web-plugin
+    profile: plugin
     codegen:
-        defaultPackage: grails.event.log
+        defaultPackage: yakworks.eventlog
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events

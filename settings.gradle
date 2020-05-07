@@ -1,6 +1,6 @@
 rootProject.name = 'grails-event-log-root'
 include 'plugin'
-findProject(':plugin').name = 'grails-event-log'
+findProject(':plugin').name = 'eventlog'
 
 //tests will be included in main runs but not deploy tasks and doc tasks
 include "examples/test-app"
