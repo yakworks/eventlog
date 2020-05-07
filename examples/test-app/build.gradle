@@ -18,7 +18,7 @@ dependencies {
     compile "org.grails:grails-plugin-controllers"
 
 
-    compile project(':grails-event-log')
+    compile project(':eventlog')
 
     //FIXME why is this needed? it doesn't flow from deps in the plugin,testing.JdbcTimeZoneSpec.$tt__$spock_feature_0_0(JdbcTimeZoneSpec.groovy:55) fails
     //compile "org.hibernate:hibernate-core:$versionHibernate"

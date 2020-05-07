@@ -1,6 +1,6 @@
 package test.app
 
-import grails.eventlog.EventLogger
+import yakworks.eventlog.EventLogger
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import org.springframework.beans.factory.annotation.Autowired
