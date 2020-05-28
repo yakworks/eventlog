@@ -1,4 +1,4 @@
-package yakworks.eventlog
+package grails.plugin.eventlog
 
 import gorm.tools.repository.RepoUtil
 import gorm.tools.testing.unit.DomainRepoTest

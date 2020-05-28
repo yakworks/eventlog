@@ -2,7 +2,7 @@
 title: Event Log Plugin
 description: Event Log Plugin
 author: Yak.Works
-group: yakworks
+group: org.grails.plugins
 
 github:
   fullName: yakworks/grails-event-log

@@ -1,4 +1,4 @@
-package yakworks.eventlog
+package grails.plugin.eventlog
 
 import gorm.tools.testing.unit.DomainRepoCrudSpec
 import org.apache.log4j.Level
