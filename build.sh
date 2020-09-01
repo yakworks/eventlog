@@ -31,7 +31,7 @@ function compile {
   ./gradlew resolveConfigurations
   ./gradlew classes
   ./gradlew testClasses
-  ./gradlew integrationTestClasses
+  # ./gradlew integrationTestClasses
 }
 
 # check used for circle
