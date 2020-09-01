@@ -6,7 +6,6 @@ package grails.plugin.eventlog
 
 import grails.compiler.GrailsCompileStatic
 
-@gorm.AuditStamp
 @GrailsCompileStatic
 public class EventLog {
     public final static int FATAL_INT = 50000
@@ -18,6 +17,7 @@ public class EventLog {
     String action      // Status of the job at the time of the log event
     String appName     // rcm, arApi, gbApi, ...
     String component   // The process the app was called from
+    Date createdDate  // the date row was created
     BigDecimal controlAmount
     Long controlCount
     Boolean isPrimaryJob = false
@@ -38,6 +38,8 @@ public class EventLog {
     }
 
     static constraints = {
+        createdDate nullable:false,display:false,editable:false,bindable:false
+
         action nullable: true
         appName nullable: true
         component nullable: true
@@ -50,6 +52,14 @@ public class EventLog {
         source nullable: true
         stackTrace nullable: true
         userId nullable: true
+    }
+
+    //update the summary on save
+    def beforeInsert() {
+        if(!createdDate) createdDate = new Date()
+    }
+    def beforeValidate() {
+        if(!createdDate) createdDate = new Date()
     }
 
     static transients = {

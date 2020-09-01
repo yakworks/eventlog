@@ -22,7 +22,7 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache:$versionHibernate"
 
     compileOnly "org.grails.plugins:gorm-tools:$vPluginGormTools"
-    compileOnly "org.grails.plugins:audit-trail:$vPluginAuditTrail"
+    //  compileOnly "org.grails.plugins:audit-trail:$vPluginAuditTrail"
 
     //used for bundled Test traits
     testCompile "org.grails:grails-gorm-testing-support"
