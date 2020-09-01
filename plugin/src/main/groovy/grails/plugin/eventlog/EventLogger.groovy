@@ -10,6 +10,7 @@ import groovy.util.logging.Log4j
 
 import org.apache.log4j.Level
 import org.grails.datastore.mapping.query.api.Criteria
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.transaction.annotation.Propagation
 
@@ -19,6 +20,7 @@ import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.util.Metadata
 
+// we depend on log4j and not slf4j as we rely on the log4j's api
 @Log4j
 @CompileStatic
 class EventLogger {
@@ -31,6 +33,7 @@ class EventLogger {
     @Value('${nine.eventLog.searchDays:7}')
     int searchDays
 
+    @Autowired
     GrailsApplication grailsApplication
 
     EventLog error(String message) {

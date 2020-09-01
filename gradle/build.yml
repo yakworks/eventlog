@@ -5,7 +5,7 @@ author: Yak.Works
 group: org.grails.plugins
 
 github:
-  fullName: yakworks/grails-event-log
+  fullName: yakworks/grails-eventlog
 
 team:
   developers: ['basejump: Joshua Burnett', 'alexeyzvegintcev: Alexey Zvegintcev']
@@ -19,3 +19,7 @@ bintray:
 maven:
   # repoUrl: http://repo.9ci.com/grails-plugins
   snapshotUrl: http://repo.9ci.com/oss-snapshots
+
+# using bash scripts to do`docs so disable in shipyak
+docs:
+  enabled: false

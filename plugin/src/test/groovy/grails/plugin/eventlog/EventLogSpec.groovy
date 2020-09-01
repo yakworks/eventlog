@@ -157,16 +157,16 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
 
     void testPurgeEvents() {
         when:
-        EventLog eventLog = new EventLog([action:'testAct1',component:'testComp1',createdBy:'-9',
-                                          createdDate:new Date()-100,editedBy:'-9',editedDate:new Date()-100,jobName:'testName1',message:'testMsg1',
-                                          priority:'3',source:'test',userId:'-9' ])
+        EventLog eventLog = new EventLog([action:'testAct1',component:'testComp1',createdBy:9,
+                                          createdDate:new Date()-100,editedBy:9,editedDate:new Date()-100,jobName:'testName1',message:'testMsg1',
+                                          priority:'3',source:'test',userId:9 ])
         eventLog.save(flush:true)
         eventLog.createdDate= new Date()-100
         eventLog.save(flush:true)
 
-        eventLog = new EventLog([action:'testAct2',component:'testComp2',createdBy:'-9',createdDate:new Date(),
-                                 editedBy:'-9',editedDate:new Date(),jobName:'testName2',message:'testMsg2',priority:'3',source:'test',
-                                 userId:'-9' ])
+        eventLog = new EventLog([action:'testAct2',component:'testComp2',createdBy:9,createdDate:new Date(),
+                                 editedBy:9,editedDate:new Date(),jobName:'testName2',message:'testMsg2',priority:'3',source:'test',
+                                 userId:9 ])
         eventLog.createdDate= new Date()
         eventLog.save(flush:true)
 

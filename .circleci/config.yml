@@ -3,78 +3,62 @@ version: 2.1
 jobs:
   build:
     docker:
-      # docker image with python and mkdocs on it already as well, based on gradle:4.6-alpine
-      - image: yakworks/alpine-java:gradle-4.10.3
-    #    branches:
-    #      only:
-    #        - master
-
-    # working_directory: ~/repo
+      - image: yakworks/alpine-jdk:builder8
 
     environment:
       GRADLE_OPTS: "-Xmx1536m -Dorg.gradle.daemon=false" #daemon false doesn't seem to get picked up by fork
-      TERM: dumb
+      # TERM: dumb
 
     parallelism: 1
-    # resource_class: large
 
     steps:
       - checkout
-      # Download and cache dependencies
-      - run:
-          name: cat build.gradle files for cache key
-          command: cat gradle.properties build.gradle plugin/build.gradle examples/test-app/build.gradle > cache-checksum.tmp
-
+      - compare-url/reconstruct
+      - run: ./build.sh catKeyFiles
       - restore_cache:
-          keys:
-            - gradle-{{ checksum "cache-checksum.tmp" }}
-      - run:
-          name: ✔︎ Downloads Dependencies [gradle resolveConfigurations]
-          command: gradle resolveConfigurations
+          key: gradle-{{ checksum "cache-checksum.tmp" }}
 
-      # compiling as a seperate step before running check helps with the "finished with non-zero exit value 137" error
       - run:
-          name: ✔︎ ------ Compile [gradle classes] ------
-          command: gradle classes
+          name: ✔︎ Dependencies and Compile
+          command: ./build.sh compile
 
       - save_cache:
           paths: ["~/.m2", "~/.gradle"]
-          key: v2-gradle-{{ checksum "cache-checksum.tmp" }}
+          key: gradle-{{ checksum "cache-checksum.tmp" }}
 
       - run:
           name: ✔︎ -- Checks Full Run Tests [gradle check]
-          command: gradle check --max-workers=2
+          command: ./build.sh check
 
-      - store_artifacts:
-          path: plugin/build/reports/codenarc
-          destination: codenarc/
-      - store_artifacts:
-          path: plugin/build/reports/tests/test/
-          destination: unit/
-      - store_artifacts:
-          path: examples/test-app/build/reports/tests
-          destination: test-app/
-      - store_test_results:
-          path: plugin/build/test-results
-      - store_test_results:
-          path: examples/test-app/build/test-results
-
-      ### Finally do the build and publish. ciPublish will check if this is a PR or on a branch that should not be published
-      - compare-url/reconstruct # orb to make the CIRCLE_COMPARE_URL when using workflows
       - run:
-          name: ✔︎ -- Publish plugin if needed [gradle ciPublish]
-          command: |
-            CIRCLE_COMPARE_URL=$(cat CIRCLE_COMPARE_URL.txt)
-            gradle ciPublish --no-daemon
+          name: ✔︎ -- Publish plugin if on releasable branch
+          command: ./build.sh ciPublishLib
+
+      # saves the build for for next job
+      - save_cache:
+          paths: [".gradle", "./build"]
+          key: build-{{ .Branch }}-{{ .Revision }}
+
+  # docs:
+  #   docker:
+  #     - image: yakworks/docmark
+  #   steps:
+  #     - checkout
+  #     - restore_cache: # prior Build job run
+  #         key: build-{{ .Branch }}-{{ .Revision }}
+  #     - compare-url/reconstruct
+  #     - run: ./build.sh ciPublishDocs
 
 orbs:
-  compare-url: iynere/compare-url@1.1.0
+  compare-url: iynere/compare-url@1.2.0
 
 workflows:
-  version: 2
   build-flow:
     jobs:
       - build:
           context: bot-context #context with shared ENV vars
-
-
+      # - docs:
+      #     context: bot-context
+      #     requires: [build]
+      #     filters:
+      #       branches: { only: [ master, /release\/.*/ ] }

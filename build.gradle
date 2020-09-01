@@ -8,33 +8,34 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         //classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
-        classpath "org.yakworks:gradle-plugins:1.1.13"
+        classpath "org.yakworks:gradle-plugins:1.1.14"
     }
 }
 
 apply plugin: 'yakworks.shipyak' //our opinionated defaults for gradle groovy & grails projects
 
 subprojects {
-    plugins.withId('java') {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+  plugins.withId('java') {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 
-        dependencies {
+    dependencies {
 
-            testRuntime "com.h2database:h2"
-            testRuntime "org.apache.tomcat:tomcat-jdbc"
-            testCompile "org.grails:grails-gorm-testing-support"
-            testCompile "org.grails:grails-web-testing-support"
-            testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
-            testCompile "org.grails:views-json-testing-support:$versionViews"
-        }
+      runtime "com.h2database:h2"
+      runtime "com.zaxxer:HikariCP:3.4.5"
+
+      testCompile "org.grails:grails-gorm-testing-support"
+      testCompile "org.grails:grails-web-testing-support"
+      testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
+      testCompile "org.grails:views-json-testing-support:$versionViews"
     }
-    configurations {
-        testCompile.extendsFrom compileOnly //includes the compileOnly in tests too so we don't have to list twice
-        all {
-            resolutionStrategy.cacheChangingModulesFor 1, 'seconds' //when changing = true this sets the cache time
-        }
+  }
+  configurations {
+    testCompile.extendsFrom compileOnly //includes the compileOnly in tests too so we don't have to list twice
+    all {
+      resolutionStrategy.cacheChangingModulesFor 1, 'seconds' //when changing = true this sets the cache time
     }
+  }
 }
 
 ext.codenarcRuleset= '''

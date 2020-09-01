@@ -30,7 +30,8 @@ Brief summary/description of the plugin.
     Closure doWithSpring() {
         { ->
             eventLogger(EventLogger) { bean ->
-                bean.autowire = 'byName'
+                bean.autowire = true
+                bean.lazyInit = true
             }
         }
     }
