@@ -209,7 +209,7 @@ class EventLogHelper {
     String errorFinish(def ... args) {
         Throwable err = null
         String msg = null
-        args.each {
+        args?.each {
             if (it instanceof Throwable) {
                 err = (Throwable) it
             } else if (it instanceof String) {

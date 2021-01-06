@@ -2,7 +2,6 @@ package grails.plugin.eventlog
 
 import gorm.tools.repository.RepoUtil
 import gorm.tools.testing.unit.DomainRepoTest
-import org.apache.log4j.Level
 import spock.lang.Specification
 
 class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLog> {
@@ -159,7 +158,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
         assert row.jobParams == null
-        assert row.priority == Level.DEBUG_INT
+        assert row.priority == EventLog.DEBUG_INT
         assert row.message == "${COMPONENT} finished"
         assert row.action == EventLogHelper.FINISHED
         assert result == row.message
@@ -183,7 +182,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.jobName == JOB_NAME
         assert row.jobParams == '[a:a, b:42]'
         assert row.isPrimaryJob
-        assert row.priority == Level.DEBUG_INT
+        assert row.priority == EventLog.DEBUG_INT
         assert row.message == "${JOB_NAME} finished: blah blah blah"
         assert row.action == EventLogHelper.FINISHED
         assert result == row.message
@@ -207,7 +206,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.jobName == JOB_NAME
         assert row.jobParams == 'a, 42'
         assert !row.isPrimaryJob
-        assert row.priority == Level.DEBUG_INT
+        assert row.priority == EventLog.DEBUG_INT
         assert row.message == "${JOB_NAME} started"
         assert row.action == EventLogHelper.STARTED
     }
@@ -228,7 +227,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.INFO_INT
+        assert row.priority == EventLog.INFO_INT
         assert row.message == "${COMPONENT} finished"
         assert row.action == EventLogHelper.FINISHED
         assert result == row.message
@@ -250,7 +249,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.INFO_INT
+        assert row.priority == EventLog.INFO_INT
         assert row.message == "${COMPONENT} started"
         assert row.action == EventLogHelper.STARTED
     }
@@ -271,7 +270,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.INFO_INT
+        assert row.priority == EventLog.INFO_INT
         assert row.message == "${COMPONENT} finished: blah blah blah"
         assert row.action == EventLogHelper.FINISHED
         assert result == row.message
@@ -294,7 +293,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.ERROR_INT
+        assert row.priority == EventLog.ERROR_INT
         assert row.message == "${COMPONENT} finished abnormally: blah blah blah"
         assert row.stackTrace.contains(e.message)
         assert row.action == EventLogHelper.ERROR
@@ -318,7 +317,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.ERROR_INT
+        assert row.priority == EventLog.ERROR_INT
         assert row.message == "${COMPONENT} finished abnormally: hell, world!"
         assert row.stackTrace.contains(e.message)
         assert row.action == EventLogHelper.ERROR
@@ -341,7 +340,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.ERROR_INT
+        assert row.priority == EventLog.ERROR_INT
         assert row.message == "${COMPONENT} finished abnormally: blah blah blah"
         assert !row.stackTrace
         assert row.action == EventLogHelper.ERROR
@@ -364,7 +363,7 @@ class EventLogHelperSpec extends Specification implements DomainRepoTest<EventLo
         assert row.appName == APP_NAME
         assert row.component == COMPONENT
         assert row.jobName == COMPONENT
-        assert row.priority == Level.ERROR_INT
+        assert row.priority == EventLog.ERROR_INT
         assert row.message == "${COMPONENT} finished abnormally with no message."
         assert !row.stackTrace
         assert row.action == EventLogHelper.ERROR

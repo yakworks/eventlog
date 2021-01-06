@@ -11,18 +11,14 @@ set -e
 # import build_functions.sh which has the the other source imports for functions
 source build/bin/all.sh
 
-# build vars
-setVar PROJECT_NAME 'eventlog'
-
-create_yml_variables gradle/build.yml
-setVar RELEASABLE_BRANCHES "$git_releasableBranchRegex"
-setVar GITHUB_FULLNAME "$github_fullName"
-setVar CHANGELOG_NAME "docs/release-notes.md"
+# default init from yml file
+init_from_build_yml "gradle/build.yml"
+# echo "PROJECT_NAME $PROJECT_NAME"
 
 # cats key files into a cache-checksum.tmp file for circle to use as key
 # change this based on how project is structured
 function catKeyFiles {
-  cat gradle.properties plugin/build.gradle examples/test-app/build.gradle > cache-checksum.tmp
+  cat gradle.properties build.gradle plugin/build.gradle > cache-checksum.tmp
 }
 
 # compile used for circle
@@ -30,13 +26,13 @@ function compile {
   # Downloads Dependencies
   ./gradlew resolveConfigurations
   ./gradlew classes
-  ./gradlew testClasses
-  # ./gradlew integrationTestClasses
+#  ./gradlew testClasses
+#  ./gradlew integrationTestClasses
 }
 
 # check used for circle
 function check {
-  ./gradlew check --max-workers=2
+  ./gradlew check
 }
 
 # helper/debug function ex: `build.sh logVars test sqlserver`

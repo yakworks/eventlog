@@ -4,10 +4,11 @@
 */
 package grails.plugin.eventlog
 
+import gorm.tools.repository.model.RepoEntity
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-public class EventLog {
+class EventLog implements RepoEntity<EventLog> {
     public final static int FATAL_INT = 50000
     public final static int ERROR_INT = 40000
     public final static int WARN_INT = 30000
@@ -58,13 +59,12 @@ public class EventLog {
     def beforeInsert() {
         if(!createdDate) createdDate = new Date()
     }
-    def beforeValidate() {
+
+    void beforeValidate() {
         if(!createdDate) createdDate = new Date()
     }
 
-    static transients = {
-        'priorityName'
-    }
+    static transients = ['priorityName']
 
     /** Gets the priority in human-readable form. Not persistable */
     String getPriorityName() {

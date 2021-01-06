@@ -1,9 +1,9 @@
 package grails.plugin.eventlog
 
-import gorm.tools.testing.unit.DomainRepoCrudSpec
-import org.apache.log4j.Level
+import gorm.tools.testing.unit.DomainRepoTest
+import spock.lang.Specification
 
-class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
+class EventLogSpec extends Specification implements DomainRepoTest<EventLog>{
     //auto runs DomainRepoCrudSpec tests
     static final MESSAGE = 'EventLoggerTests'
     static final exText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."+
@@ -56,7 +56,7 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
 
         then:
         MESSAGE == last.message
-        Level.ERROR_INT == last.priority
+        EventLog.ERROR_INT == last.priority
 
         when:
         def stack = EventLogger.convertStackTrace(exception)
@@ -80,7 +80,7 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
         then:
         1 == afterList.size()
         MESSAGE == afterList.last().message
-        Level.WARN_INT == afterList.last().priority
+        EventLog.WARN_INT == afterList.last().priority
     }
 
     void testInfo() {
@@ -97,7 +97,7 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
         then:
         1 == afterList.size()
         MESSAGE == afterList.last().message
-        Level.INFO_INT == afterList.last().priority
+        EventLog.INFO_INT == afterList.last().priority
     }
 
     void testLogMap() {
@@ -152,7 +152,7 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
         then:
         1 == afterList.size()
         MESSAGE == afterList.last().message
-        Level.ERROR_INT == afterList.last().priority
+        EventLog.ERROR_INT == afterList.last().priority
     }
 
     void testPurgeEvents() {
@@ -198,7 +198,7 @@ class EventLogSpec extends DomainRepoCrudSpec<EventLog> {
         exText.substring(0,EventLogger.MAX_MESSAGE_SIZE) == last.message
 
         when:
-        Level.ERROR_INT == last.priority
+        EventLog.ERROR_INT == last.priority
         def stack = EventLogger.convertStackTrace(exception)
 
         then:

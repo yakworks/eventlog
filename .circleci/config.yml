@@ -35,9 +35,9 @@ jobs:
           command: ./build.sh ciPublishLib
 
       # saves the build for for next job
-      - save_cache:
-          paths: [".gradle", "./build"]
-          key: build-{{ .Branch }}-{{ .Revision }}
+      # - save_cache:
+      #     paths: [".gradle", "./build"]
+      #     key: build-{{ .Branch }}-{{ .Revision }}
 
   # docs:
   #   docker:
