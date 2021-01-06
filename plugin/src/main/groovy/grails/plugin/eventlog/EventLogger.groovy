@@ -6,22 +6,20 @@ package grails.plugin.eventlog
 
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 
-import org.apache.log4j.Level
 import org.grails.datastore.mapping.query.api.Criteria
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.transaction.annotation.Propagation
 
-import gorm.tools.Pager
+import gorm.tools.beans.Pager
 import grails.compiler.GrailsCompileStatic
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.util.Metadata
 
-// we depend on log4j and not slf4j as we rely on the log4j's api
-@Log4j
+@Slf4j
 @CompileStatic
 class EventLogger {
 
@@ -37,33 +35,33 @@ class EventLogger {
     GrailsApplication grailsApplication
 
     EventLog error(String message) {
-        log(message: message, priority: Level.ERROR_INT)
+        log(message: message, priority: EventLog.ERROR_INT)
     }
 
     EventLog error(String message, Throwable throwable) {
-        log(message: message, throwable: throwable, priority: Level.ERROR_INT)
+        log(message: message, throwable: throwable, priority: EventLog.ERROR_INT)
     }
 
     EventLog error(Map params) {
-        params['priority'] = Level.ERROR_INT
+        params['priority'] = EventLog.ERROR_INT
         log(params)
     }
 
     EventLog info(String message) {
-        log(message: message, priority: Level.INFO_INT)
+        log(message: message, priority: EventLog.INFO_INT)
     }
 
     EventLog info(Map params) {
-        params['priority'] = Level.INFO_INT
+        params['priority'] = EventLog.INFO_INT
         log(params)
     }
 
     EventLog warn(String message) {
-        log(message: message, priority: Level.WARN_INT)
+        log(message: message, priority: EventLog.WARN_INT)
     }
 
     EventLog warn(Map params) {
-        params['priority'] = Level.WARN_INT
+        params['priority'] = EventLog.WARN_INT
         log(params)
     }
 
@@ -74,7 +72,7 @@ class EventLogger {
         try {
             return logTransactional(params)
         } catch (e) {
-            log.error e
+            log.error(e.message, e)
         }
     }
 

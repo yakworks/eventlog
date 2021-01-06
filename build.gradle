@@ -1,33 +1,61 @@
 //It all starts here
 buildscript {
-    repositories {
-        mavenLocal()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://repo.grails.org/grails/core" }
-    }
-    dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        //classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
-        classpath "org.yakworks:gradle-plugins:1.1.14"
-    }
+  repositories {
+    mavenLocal()
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://repo.grails.org/grails/core" }
+  }
+  dependencies {
+    classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+    classpath "org.grails.plugins:hibernate5:$vGormHibernate"
+    // classpath "org.grails.plugins:views-gradle:2.0.2"
+    classpath "org.yakworks:gradle-plugins:$vShipyak"
+  }
 }
 
 apply plugin: 'yakworks.shipyak' //our opinionated defaults for gradle groovy & grails projects
 
 subprojects {
+  repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+  }
+
   plugins.withId('java') {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 
     dependencies {
+      developmentOnly("org.springframework.boot:spring-boot-devtools")
+      compile "org.springframework.boot:spring-boot-starter-logging"
+      compile "org.springframework.boot:spring-boot-autoconfigure"
+      compile "org.grails:grails-core"
+      compile "org.springframework.boot:spring-boot-starter-tomcat"
+
+      compile "org.grails:grails-web-boot"
+
+      compile "org.grails:grails-logging"
+      compile "org.grails:grails-plugin-databinding"
+      compile "org.grails:grails-plugin-services"
+
+      compile "org.grails.plugins:events"
+
+      compileOnly "org.grails.plugins:gorm-tools:$vGormTools"
+      compileOnly "org.grails.plugins:hibernate5"
+      compileOnly "org.hibernate:hibernate-core:$vHibernate"
+      compileOnly "org.hibernate:hibernate-ehcache:$vHibernate"
+      compileOnly 'org.codehaus.groovy:groovy-dateutil'
 
       runtime "com.h2database:h2"
-      runtime "com.zaxxer:HikariCP:3.4.5"
+      runtimeOnly "com.zaxxer:HikariCP:3.4.5"
 
+      compileOnly "io.micronaut:micronaut-inject-groovy"
+
+      testCompile "org.mockito:mockito-core"
       testCompile "org.grails:grails-gorm-testing-support"
       testCompile "org.grails:grails-web-testing-support"
-      testCompile "org.grails.plugins:build-test-data:$versionBuildTestData"
-      testCompile "org.grails:views-json-testing-support:$versionViews"
+      testCompile "org.grails.plugins:build-test-data:$vBuildTestData"
+      testCompile "org.grails:views-json-testing-support:$vViews"
     }
   }
   configurations {
@@ -35,9 +63,23 @@ subprojects {
     all {
       resolutionStrategy.cacheChangingModulesFor 1, 'seconds' //when changing = true this sets the cache time
     }
+    developmentOnly
+    runtimeClasspath {
+      extendsFrom developmentOnly
+    }
+  }
+
+  // sets the path to sys properties so we can use it find grails-app/conf during AST
+  plugins.withId('groovy') {
+    compileGroovy {
+      groovyOptions.fork = true
+      groovyOptions.forkOptions.jvmArgs = ['-Dgradle.projectDir=' + project.projectDir.absolutePath]
+    }
   }
 }
 
 ext.codenarcRuleset= '''
-  //getRule('Println').enabled = false
+  // getRule('Println').enabled = false
+  getRule('AbcMetric').enabled = false
+  getRule('CatchRuntimeException').enabled = false
 '''
