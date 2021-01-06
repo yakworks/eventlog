@@ -6,6 +6,10 @@ group: org.grails.plugins
 
 github:
   fullName: yakworks/grails-eventlog
+git:
+  releasableBranchRegex: master|release/.+
+releaseNotes:
+  file: docs/release-notes.md
 
 team:
   developers: ['basejump: Joshua Burnett', 'alexeyzvegintcev: Alexey Zvegintcev']
