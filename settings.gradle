@@ -1,4 +1,4 @@
-rootProject.name = 'grails-event-log-root'
+rootProject.name = 'eventlog-root'
 include 'plugin'
 findProject(':plugin').name = 'eventlog'
 
