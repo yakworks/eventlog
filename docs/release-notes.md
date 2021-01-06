@@ -1,3 +1,7 @@
+#### v4.0.1
+
+[Full Changelog](https://github.com/yakworks/grails-eventlog/compare/v3.0.1...v4.0.1)
+
 #### v3.0.1
 
 [Full Changelog](https://github.com/yakworks/grails-eventlog/compare/v3.0.0...v3.0.1)
